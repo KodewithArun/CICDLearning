@@ -1,7 +1,9 @@
 from enum import Enum
+
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
-from app.calculator import add, subtract, multiply, divide
+
+from app.calculator import add, divide, multiply, subtract
 
 app = FastAPI(
     title="Simple Calculator API",
