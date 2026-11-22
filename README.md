@@ -1,123 +1,72 @@
-# 🧮 Calculator API (FastAPI)
+# 🚀 CI/CD Learning & AI Projects
 
-A simple Calculator REST API built using **FastAPI** and **Pytest**, containerized with **Docker**, designed for learning CI/CD pipelines.
-
----
-
-## 📁 Project Structure
-
-```text
-CICDLearning/
-├── app/
-│   ├── __init__.py
-│   ├── calculator.py       # Core calculator logic (add, subtract, multiply, divide)
-│   └── main.py             # FastAPI web routes and request validation
-├── tests/
-│   ├── __init__.py
-│   ├── test_calculator.py  # Unit tests for core calculator math
-│   └── test_main.py        # API endpoint tests using TestClient
-├── Dockerfile              # Docker container definition
-├── docker-compose.yml      # Multi-container orchestration (optional convenience)
-├── .dockerignore           # Excluded files from Docker build context
-├── requirements.txt        # Production dependencies
-├── requirements-dev.txt    # Testing & development dependencies
-└── README.md
-```
+This repository contains both a **FastAPI Calculator API** and a **Streamlit AI Chatbot (Groq + LangChain)**, configured with **automated testing, linting with Ruff, and Docker containerization**.
 
 ---
 
-## 🚀 Getting Started Locally
+## 🤖 1. Groq AI Chatbot (LangChain + Streamlit)
 
-### 1. Create and Activate a Virtual Environment
+An interactive conversational AI chatbot powered by **Groq Cloud** ultra-fast inference and **LangChain**, with a sleek **Streamlit** user interface.
 
-```bash
-python3.12 -m venv .venv
-source .venv/bin/activate
-```
+### Features
+- ⚡ **Ultra-fast inference** using Groq's Llama 3.3, Llama 3.1, Mixtral, and Gemma models.
+- 🔐 **Secure Credential Handling**: Reads `GROQ_API_KEY` directly from `.env` file (or allows sidebar key input).
+- 💬 **Streaming Responses**: Real-time token streaming as the LLM responds.
+- 🎛️ **Sidebar Controls**: Model selection, temperature slider, custom system prompt, and chat clearing.
 
-### 2. Install Dependencies
+### Quickstart for the Chatbot
 
-```bash
-pip install -r requirements-dev.txt
-```
+1. **Set your Groq API Key**:
+   Copy `.env.example` to `.env`:
+   ```bash
+   cp .env.example .env
+   ```
+   Add your API key inside `.env`:
+   ```env
+   GROQ_API_KEY=gsk_your_actual_groq_key_here
+   ```
+   *(Get your free API key at [https://console.groq.com/keys](https://console.groq.com/keys))*
 
-### 3. Run the Development Server
+2. **Run the Streamlit App**:
+   ```bash
+   streamlit run streamlit_app.py
+   ```
+   Open your browser at: [http://localhost:8501](http://localhost:8501)
 
+---
+
+## 🧮 2. FastAPI Calculator API
+
+A simple REST API with 13 automated tests, ideal for CI/CD demonstration.
+
+### Run FastAPI Locally:
 ```bash
 uvicorn app.main:app --reload
 ```
-
-The API will be live at:
-- **Root**: [http://127.0.0.1:8000/](http://127.0.0.1:8000/)
-- **Interactive Swagger Docs**: [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)
-- **Health Check**: [http://127.0.0.1:8000/health](http://127.0.0.1:8000/health)
+- API Docs: [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)
+- Health check: [http://127.0.0.1:8000/health](http://127.0.0.1:8000/health)
 
 ---
 
-## 🐳 Running with Docker
+## 🧪 Testing and Linting
 
-### Option A: Using Docker CLI
-
-1. **Build the image**:
-   ```bash
-   docker build -t cicd-calculator:latest .
-   ```
-
-2. **Run the container**:
-   ```bash
-   docker run -d -p 8000:8000 --name calculator-app cicd-calculator:latest
-   ```
-
-3. **Stop the container**:
-   ```bash
-   docker stop calculator-app && docker rm calculator-app
-   ```
-
-### Option B: Using Docker Compose
-
-```bash
-# Start container in detached mode
-docker compose up -d --build
-
-# View logs
-docker compose logs -f
-
-# Stop and remove container
-docker compose down
-```
-
----
-
-## 🧪 Running Tests Locally
-
-Run all unit and integration tests with `pytest`:
-
+Run automated test suite (18 unit and integration tests):
 ```bash
 pytest -v
 ```
 
+Run code formatting & linting checks:
+```bash
+ruff check .
+```
+
 ---
 
-## 📡 API Example Usage
+## 🔄 CI/CD Pipeline (GitHub Actions)
 
-### Calculate endpoint: `POST /calculate`
-
-**Request Body:**
-```json
-{
-  "operation": "add",
-  "a": 15,
-  "b": 25
-}
-```
-
-**Response:**
-```json
-{
-  "operation": "add",
-  "a": 15.0,
-  "b": 25.0,
-  "result": 40.0
-}
-```
-Supported operations: `"add"`, `"subtract"`, `"multiply"`, `"divide"`.
+Located in [`.github/workflows/ci.yml`](.github/workflows/ci.yml):
+- Runs automatically on every `git push` or `pull_request` to `main`.
+- Sets up Python 3.12 with pip caching.
+- Installs development dependencies.
+- Runs `ruff check .` for code quality.
+- Executes `pytest -v` across all test suites.

@@ -31,4 +31,6 @@ jobs:
         run: ruff check .
 
       - name: Run automated tests
+        env:
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
         run: pytest -v
