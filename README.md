@@ -1,6 +1,6 @@
 # 🧮 Calculator API (FastAPI)
 
-A simple Calculator REST API built using **FastAPI** and **Pytest**, designed for learning CI/CD pipelines.
+A simple Calculator REST API built using **FastAPI** and **Pytest**, containerized with **Docker**, designed for learning CI/CD pipelines.
 
 ---
 
@@ -16,6 +16,9 @@ CICDLearning/
 │   ├── __init__.py
 │   ├── test_calculator.py  # Unit tests for core calculator math
 │   └── test_main.py        # API endpoint tests using TestClient
+├── Dockerfile              # Docker container definition
+├── docker-compose.yml      # Multi-container orchestration (optional convenience)
+├── .dockerignore           # Excluded files from Docker build context
 ├── requirements.txt        # Production dependencies
 ├── requirements-dev.txt    # Testing & development dependencies
 └── README.md
@@ -28,7 +31,7 @@ CICDLearning/
 ### 1. Create and Activate a Virtual Environment
 
 ```bash
-python3 -m venv .venv
+python3.12 -m venv .venv
 source .venv/bin/activate
 ```
 
@@ -48,6 +51,40 @@ The API will be live at:
 - **Root**: [http://127.0.0.1:8000/](http://127.0.0.1:8000/)
 - **Interactive Swagger Docs**: [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)
 - **Health Check**: [http://127.0.0.1:8000/health](http://127.0.0.1:8000/health)
+
+---
+
+## 🐳 Running with Docker
+
+### Option A: Using Docker CLI
+
+1. **Build the image**:
+   ```bash
+   docker build -t cicd-calculator:latest .
+   ```
+
+2. **Run the container**:
+   ```bash
+   docker run -d -p 8000:8000 --name calculator-app cicd-calculator:latest
+   ```
+
+3. **Stop the container**:
+   ```bash
+   docker stop calculator-app && docker rm calculator-app
+   ```
+
+### Option B: Using Docker Compose
+
+```bash
+# Start container in detached mode
+docker compose up -d --build
+
+# View logs
+docker compose logs -f
+
+# Stop and remove container
+docker compose down
+```
 
 ---
 
